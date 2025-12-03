@@ -100,7 +100,7 @@ export default function LoginPage() {
                 required
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                placeholder="例: hatariku"
+                placeholder="例: taro"
                 style={{ width: '100%' }}
               />
             </label>
