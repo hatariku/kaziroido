@@ -1,12 +1,16 @@
-// app/quiz/[id]/page.tsx
 'use client'
+
+import { use } from 'react'
 import AuthGate from '@/app/_components/AuthGate'
 import { useEffect, useState } from 'react'
 import { fetchProblemById, fetchNextProblemId } from '@/lib/problems'
 import { upsertProgress } from '@/lib/progress'
 
-export default function Quiz({ params }: { params: { id: string } }) {
-  const pid = Number(params.id)
+export default function Quiz({ params }: { params: Promise<{ id: string }> }) {
+  // Next.js 16 では params が Promise なので use() で unwrap する
+  const { id } = use(params)
+  const pid = Number(id)
+
   const [q, setQ] = useState<any>(null)
   const [choice, setChoice] = useState<number | null>(null)
   const [result, setResult] = useState<'idle' | 'ok' | 'ng'>('idle')
@@ -14,8 +18,10 @@ export default function Quiz({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     ;(async () => {
-      setQ(await fetchProblemById(pid))
-      setNextId(await fetchNextProblemId(pid))
+      const problem = await fetchProblemById(pid)
+      setQ(problem)
+      const n = await fetchNextProblemId(pid)
+      setNextId(n)
       setChoice(null)
       setResult('idle')
     })()
@@ -23,8 +29,8 @@ export default function Quiz({ params }: { params: { id: string } }) {
 
   async function submit() {
     if (choice == null || !q) return
-    const ok = choice === q.answer_index // ★MVP: クライアント側採点
-    await upsertProgress(q.id, ok)
+    const ok = choice === q.answer_index          // ★ クライアント側で採点
+    await upsertProgress(q.id, ok)                // 進捗を Supabase に保存
     setResult(ok ? 'ok' : 'ng')
   }
 
@@ -40,6 +46,7 @@ export default function Quiz({ params }: { params: { id: string } }) {
           <img src={q.image_url} alt="question" style={{ maxWidth: '100%' }} />
         )}
         <pre className="code">{q.body}</pre>
+
         <div className="choices">
           {q.choices.map((c: string, i: number) => (
             <button
@@ -51,6 +58,7 @@ export default function Quiz({ params }: { params: { id: string } }) {
             </button>
           ))}
         </div>
+
         <div className="actions">
           <button className="btn" onClick={submit}>
             答える
@@ -58,6 +66,7 @@ export default function Quiz({ params }: { params: { id: string } }) {
           {result === 'ok' && <span className="ok">正解！</span>}
           {result === 'ng' && <span className="ng">不正解…</span>}
         </div>
+
         <hr />
         <nav className="pager">
           <a href="/quiz">一覧へ</a>
