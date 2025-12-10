@@ -1,25 +1,23 @@
 // app/page.tsx
-'use client'
-import { useEffect, useState } from 'react'
-import { fetchFirstProblemId } from '@/lib/problems'
+import Screen from "@/components/Screen"
+import TopBar from "@/components/TopBar"
+import BlueButton from "@/components/BlueButton"
 
-export default function Home() {
-  const [firstId, setFirstId] = useState<number | null>(null)
-
-  useEffect(() => {
-    fetchFirstProblemId().then(setFirstId)
-  }, [])
-
+export default function HomePage() {
   return (
-    <section>
-      <h2>ゲーム選択</h2>
-      <p>C言語でミニゲームを作るコースです。</p>
-      {firstId && (
-        <a className="btn" href={`/quiz/${firstId}`}>
-          はじめる
-        </a>
-      )}
-    </section>
+    <Screen>
+      <TopBar />
+
+      <div className="mt-8 text-center">
+        <h1 className="text-4xl font-black tracking-wide">KAJIROID</h1>
+        <p className="mt-2 text-xs text-gray-400">Presents from Nishi</p>
+      </div>
+
+      <div className="mt-14 space-y-6">
+        <BlueButton href="/lesson">Lesson Start</BlueButton>
+        <BlueButton href="/archive">Archive</BlueButton>
+        <BlueButton href="/collection">Collection</BlueButton>
+      </div>
+    </Screen>
   )
 }
-
