@@ -76,11 +76,7 @@ const lesson1Data: Record<
   },
 }
 
-export default function Lesson1StepPage({
-  params,
-}: {
-  params: { step: string }
-}) {
+export default function Lesson1StepPage({ params }: any) {
   const step = params.step
   const data = lesson1Data[step]
 
@@ -114,3 +110,5 @@ export default function Lesson1StepPage({
     </Screen>
   )
 }
+
+  

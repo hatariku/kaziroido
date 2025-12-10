@@ -2,13 +2,8 @@
 import Screen from "@/components/Screen"
 import BlueButton from "@/components/BlueButton"
 
-export default function Lesson1ClearPage({
-  params,
-}: {
-  params: { step: string }
-}) {
+export default function Lesson1ClearPage({ params }: any) {
   const step = params.step
-
   const isLast = step === "1-5"
   const nextStepMap: Record<string, string> = {
     "1-1": "1-2",
@@ -47,3 +42,6 @@ export default function Lesson1ClearPage({
     </Screen>
   )
 }
+
+
+  
