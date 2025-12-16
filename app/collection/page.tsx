@@ -1,42 +1,32 @@
-// app/collection/page.tsx
-import Screen from "@/components/Screen"
-import BlueButton from "@/components/BlueButton"
-
 export default function CollectionPage() {
   return (
-    <Screen title="Collection">
-      <div className="space-y-8">
-        {/* ASMR (coming soon) */}
-        <div className="rounded-md border">
-          <div className="bg-gray-200 p-6 text-center text-lg font-semibold">
-            ASMR
-          </div>
-          <div className="p-6 text-center text-sm text-gray-500">
-            coming soon...
-          </div>
-        </div>
+    <div className="space-y-6">
+      <h1 className="text-center text-2xl font-semibold">Collection</h1>
 
-        {/* 西 collection */}
-        <div className="rounded-md border">
-          <div className="bg-gray-200 p-6 text-center text-lg font-semibold">
-            西
-          </div>
-          <div className="grid grid-cols-2 gap-4 p-6">
-            {[1, 2, 3, 4].map((n) => (
-              <div
+      <div className="rounded-xl border overflow-hidden">
+        <div className="bg-neutral-200 p-10 text-center text-xl font-semibold">
+          ASMR
+        </div>
+        <div className="p-10 text-center text-neutral-500">coming soon...</div>
+      </div>
+
+      <div className="rounded-xl border overflow-hidden">
+        <div className="bg-neutral-200 p-10 text-center text-xl font-semibold">
+          西
+        </div>
+        <div className="p-8">
+          <div className="grid grid-cols-2 gap-4">
+            {["1", "2", "3", "4"].map((n) => (
+              <button
                 key={n}
-                className="flex aspect-square items-center justify-center rounded-md bg-gray-200 text-lg font-semibold"
+                className="h-14 rounded-lg bg-neutral-200 text-lg font-semibold"
               >
                 {n}
-              </div>
+              </button>
             ))}
           </div>
         </div>
       </div>
-
-      <div className="mt-10">
-        <BlueButton href="/" variant="gray">戻る</BlueButton>
-      </div>
-    </Screen>
+    </div>
   )
 }

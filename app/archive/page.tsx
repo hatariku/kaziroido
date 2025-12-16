@@ -1,21 +1,34 @@
-// app/archive/page.tsx
-import Screen from "@/components/Screen"
-import BlueButton from "@/components/BlueButton"
+import Link from "next/link"
+
+function BigButton({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-full rounded-[28px] bg-sky-400 py-6 text-center text-xl font-semibold shadow-sm">
+      {children}
+    </div>
+  )
+}
 
 export default function ArchivePage() {
   return (
-    <Screen title="作ったゲームを遊ぶ">
+    <div className="space-y-6">
+      <h1 className="text-center text-2xl font-semibold">作ったゲームを遊ぶ</h1>
+
       <div className="space-y-6">
-        <BlueButton href="/games/1">GAME 1</BlueButton>
-        <BlueButton href="/games/2">GAME 2</BlueButton>
-
-        <p className="text-center text-sm text-gray-500">
-          ボタンを押すとそれぞれのゲームで遊べる
-        </p>
-
-        <BlueButton href="/games/3">GAME 3</BlueButton>
-        <BlueButton href="/games/ex">GAME EX</BlueButton>
+        <BigButton>GAME 1</BigButton>
+        <BigButton>GAME 2</BigButton>
+        <BigButton>GAME 3</BigButton>
+        <BigButton>GAME EX</BigButton>
       </div>
-    </Screen>
+
+      <p className="text-center text-sm text-neutral-500">
+        ボタンを押すとそれぞれのゲームで遊べる（あとでリンク差し替え）
+      </p>
+
+      <div className="text-center">
+        <Link className="text-sm underline" href="/">
+          戻る
+        </Link>
+      </div>
+    </div>
   )
 }
