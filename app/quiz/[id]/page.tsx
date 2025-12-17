@@ -114,9 +114,20 @@ export default function QuizOnePage({
       },
       body: JSON.stringify({ problemId, answers: parsed }),
     })
+
     const json = await res.json()
     setResult(json)
   }
+
+  // ✅ 全問クリアなら自動で /archive へ（いらなければ消してOK）
+  useEffect(() => {
+    if (result?.allCleared) {
+      const t = setTimeout(() => {
+        location.href = "/archive"
+      }, 1200)
+      return () => clearTimeout(t)
+    }
+  }, [result])
 
   const pdfSrc = proxy(problem?.problem_pdf_url)
   const pngSrc = proxy(problem?.choices_image_url)
@@ -144,24 +155,14 @@ export default function QuizOnePage({
             <div className="px-4 py-3 border-b flex items-center justify-between">
               <div className="font-semibold">問題</div>
               {problem.problem_pdf_url && (
-                <a
-                  className="text-sm underline text-neutral-700"
-                  href={pdfSrc}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a className="text-sm underline text-neutral-700" href={pdfSrc} target="_blank" rel="noreferrer">
                   別タブで開く
                 </a>
               )}
             </div>
 
             {problem.problem_pdf_url ? (
-              <iframe
-                key={pdfSrc}
-                src={pdfSrc}
-                className="h-[70vh] w-full bg-white"
-                title="problem pdf"
-              />
+              <iframe key={pdfSrc} src={pdfSrc} className="h-[70vh] w-full bg-white" title="problem pdf" />
             ) : (
               <div className="p-4 text-sm text-neutral-600">problem_pdf_url が空です</div>
             )}
@@ -187,12 +188,7 @@ export default function QuizOnePage({
                       setError("選択肢PNGの読み込みに失敗しました（proxy-image を確認してね）")
                     }}
                   />
-                  <a
-                    className="mt-2 block text-center text-sm underline text-neutral-700"
-                    href={pngSrc}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a className="mt-2 block text-center text-sm underline text-neutral-700" href={pngSrc} target="_blank" rel="noreferrer">
                     画像を別タブで開く
                   </a>
                 </>
@@ -211,9 +207,7 @@ export default function QuizOnePage({
 
             <div className="p-4">
               {sortedLabels.length === 0 ? (
-                <div className="text-sm text-neutral-600">
-                  空欄が0件です（problem_blanks にデータが入ってない可能性）
-                </div>
+                <div className="text-sm text-neutral-600">空欄が0件です（problem_blanks にデータが入ってない可能性）</div>
               ) : (
                 <div className="grid grid-cols-3 gap-3">
                   {sortedLabels.map((l) => (
@@ -226,9 +220,7 @@ export default function QuizOnePage({
                         min={1}
                         max={maxNumber}
                         value={answers[l] ?? ""}
-                        onChange={(e) =>
-                          setAnswers((p) => ({ ...p, [l]: e.target.value }))
-                        }
+                        onChange={(e) => setAnswers((p) => ({ ...p, [l]: e.target.value }))}
                         className="w-full rounded-xl border px-3 py-2 text-base"
                       />
                     </label>
@@ -236,10 +228,7 @@ export default function QuizOnePage({
                 </div>
               )}
 
-              <button
-                onClick={submit}
-                className="mt-5 w-full rounded-[28px] bg-sky-400 py-5 text-lg font-semibold shadow-sm active:scale-[0.99]"
-              >
+              <button onClick={submit} className="mt-5 w-full rounded-[28px] bg-sky-400 py-5 text-lg font-semibold shadow-sm active:scale-[0.99]">
                 評価
               </button>
 
@@ -254,6 +243,23 @@ export default function QuizOnePage({
           {/* 結果 */}
           {result && (
             <section className="space-y-3">
+              {/* ✅ 全問クリアのときの動作（表示 + ボタン） */}
+              {result?.allCleared && (
+                <div className="rounded-2xl border bg-yellow-50 p-4 text-center">
+                  <div className="font-semibold">🎉 全問クリア！</div>
+                  <div className="mt-1 text-sm text-neutral-600">
+                    クリア数 {result.clearedCount ?? "-"} / {result.totalCount ?? "-"}
+                  </div>
+
+                  <Link
+                    href="/archive"
+                    className="mt-3 inline-block rounded-[20px] bg-sky-400 px-6 py-3 font-semibold"
+                  >
+                    作ったゲームで遊ぶへ
+                  </Link>
+                </div>
+              )}
+
               {result.ok ? (
                 <div className="rounded-2xl border bg-emerald-50 p-4 text-center font-semibold text-emerald-700">
                   collect!
