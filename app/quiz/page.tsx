@@ -80,10 +80,7 @@ export default function QuizListPage() {
               <div className="text-xs text-neutral-500">#{p.id}</div>
             </div>
 
-            <div className="mt-2 flex flex-wrap gap-2">
-              <Pill>difficulty: {p.difficulty ?? "-"}</Pill>
-              <Pill>{p.problem_type}</Pill>
-            </div>
+
           </Link>
         ))}
 

@@ -8,12 +8,12 @@ import { supabaseBrowser } from "@/lib/supabase/browser"
 type NavItem = { href: string; label: string }
 
 const NAV: NavItem[] = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "ホーム" },
   { href: "/quiz", label: "問題" },
-  { href: "/archive", label: "Archive" },
-  { href: "/collection", label: "Collection" },
+  { href: "/archive", label: "ゲーム" },
+  { href: "/collection", label: "コレクション" },
   { href: "/me", label: "マイページ" },
-  { href: "/setting", label: "Settings" },
+  { href: "/setting", label: "設定" },
 ]
 
 export default function AppFrame({ children }: { children: React.ReactNode }) {
@@ -111,10 +111,6 @@ export default function AppFrame({ children }: { children: React.ReactNode }) {
                 >
                   ログアウト
                 </button>
-              </div>
-
-              <div className="mt-6 text-xs text-neutral-500">
-                ※ 上の「Kaziroido Home…」みたいな横並びメニューは廃止して、全部ここに入れてる
               </div>
             </aside>
           </div>

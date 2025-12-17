@@ -21,12 +21,11 @@ export default function HomePage() {
   return (
     <div className="text-center">
       <h1 className="mt-10 text-5xl font-black tracking-wide">KAJIROID</h1>
-      <p className="mt-2 text-sm text-neutral-500">Presents from Nishi</p>
 
       <div className="mx-auto mt-12 w-full max-w-[320px] space-y-6">
         <BigButton href="/quiz">問題</BigButton>
-        <BigButton href="/archive">Archive</BigButton>
-        <BigButton href="/collection">Collection</BigButton>
+        <BigButton href="/archive">ゲーム</BigButton>
+        <BigButton href="/collection">コレクション</BigButton>
       </div>
     </div>
   )

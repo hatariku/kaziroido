@@ -14,10 +14,10 @@ function GrayButton({ href, children }: { href: string; children: React.ReactNod
 export default function SettingPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-center text-2xl font-semibold">Settings</h1>
+      <h1 className="text-center text-2xl font-semibold">設定</h1>
 
       <div className="space-y-4">
-        <GrayButton href="/me">Profile</GrayButton>
+        <GrayButton href="/me">プロフィール</GrayButton>
         <GrayButton href="/setting/delete">データ削除</GrayButton>
       </div>
 

@@ -1,7 +1,7 @@
 export default function CollectionPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-center text-2xl font-semibold">Collection</h1>
+      <h1 className="text-center text-2xl font-semibold">コレクション</h1>
 
       <div className="rounded-xl border overflow-hidden">
         <div className="bg-neutral-200 p-10 text-center text-xl font-semibold">
